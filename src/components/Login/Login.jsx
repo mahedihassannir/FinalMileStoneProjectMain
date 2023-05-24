@@ -1,8 +1,14 @@
 
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { loadCaptchaEnginge, LoadCanvasTemplate, LoadCanvasTemplateNoReload, validateCaptcha } from 'react-simple-captcha';
+import { contexM } from '../AuthProvider/ContexSuplier';
+import { Link } from 'react-router-dom';
+
+
 
 const Login = () => {
+
+    const { LoginUser } = useContext(contexM)
 
     useEffect(() => {
 
@@ -22,6 +28,14 @@ const Login = () => {
         const password = from.password.value
 
         console.log(email, password);
+        LoginUser()
+            .then(res => {
+                const user = res.user
+                console.log(user);
+            })
+            .catch(err => {
+                console.log(err);
+            })
 
     }
 
@@ -111,6 +125,12 @@ const Login = () => {
                     >
                         Forgot Password?
                     </a>
+                    <Link to="/Register">
+                        <p className='link'><small>new here create a new account</small></p>
+                    </Link>
+
+
+
                 </div>
             </form>
 

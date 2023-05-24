@@ -12,9 +12,9 @@ const Main = () => {
     const location = useLocation()
 
 
-    const NoheaderFooter = location.pathname.includes('login')
+    const NoheaderFooter = location.pathname.includes('login') || location.pathname.includes('Register')
 
-    console.log(NoheaderFooter);
+    
 
     return (
         <div>
