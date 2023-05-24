@@ -1,10 +1,11 @@
 
-import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithPhoneNumber, signOut } from 'firebase/auth'
+import { GoogleAuthProvider, createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithPhoneNumber, signInWithPopup, signOut } from 'firebase/auth'
 
-const auth = getAuth(app)
+import app from '../AuthProvider/firebase.config';
 
 import { createContext, useEffect, useState } from 'react';
-import app from './firebase.config';
+const auth = getAuth(app)
+
 
 export const contexM = createContext(null)
 
@@ -18,6 +19,14 @@ const ContexSuplier = ({ children }) => {
 
     // here is user and login systems ends
 
+    const provider = new GoogleAuthProvider()
+
+    const LoginUserWIthPopUp = () => {
+        SetLoader(true)
+
+        return signInWithPopup(auth, provider)
+
+    }
 
 
     const LoginUser = (email, password) => {
@@ -29,6 +38,8 @@ const ContexSuplier = ({ children }) => {
         SetLoader(true)
 
         return createUserWithEmailAndPassword(auth, email, password)
+        
+
     }
 
     const LogoutUser = () => {
@@ -47,7 +58,7 @@ const ContexSuplier = ({ children }) => {
             SetLoader(false)
         })
         return () => {
-            off
+            return off
         }
     }, [])
 
@@ -57,7 +68,8 @@ const ContexSuplier = ({ children }) => {
         createUser,
         LogoutUser,
         Loader,
-        user
+        user,
+        LoginUserWIthPopUp
 
 
     }

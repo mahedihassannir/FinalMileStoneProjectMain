@@ -1,13 +1,36 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { contexM } from "../../../components/AuthProvider/ContexSuplier";
 
 const NavBar = () => {
+
+    const { user, LogoutUser } = useContext(contexM)
+
+    const handleLogout = () => {
+        LogoutUser()
+            .then(res => {
+                const user = res.user
+                console.log(user);
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
 
     const navOptions = <>
         <li><Link to="/">Home</Link></li>
         <li><Link to="/menu">Our Menu</Link></li>
         <li><Link to="/order/salad">Order Food</Link></li>
-        <li><Link to="/login">Login</Link></li>
-        
+
+        {
+
+            user ? <li onClick={handleLogout}>logout</li>
+                : <li><Link to="/login">Login</Link></li>
+
+
+
+        }
+
     </>
 
     return (

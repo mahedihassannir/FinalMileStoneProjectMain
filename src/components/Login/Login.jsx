@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 
 
 
+
 const Login = () => {
 
     const { LoginUser } = useContext(contexM)
@@ -28,7 +29,7 @@ const Login = () => {
         const password = from.password.value
 
         console.log(email, password);
-        LoginUser()
+        LoginUser(email,password)
             .then(res => {
                 const user = res.user
                 console.log(user);
@@ -127,6 +128,10 @@ const Login = () => {
                     </a>
                     <Link to="/Register">
                         <p className='link'><small>new here create a new account</small></p>
+                    </Link>
+
+                    <Link to='/'>
+                        <p>back to home </p>
                     </Link>
 
 
