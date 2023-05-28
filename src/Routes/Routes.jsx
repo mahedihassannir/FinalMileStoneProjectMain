@@ -7,6 +7,9 @@ import Menu from "../pages/Menu/Menu/Menu";
 import Order from "../pages/Order/Order/Order";
 import Login from "../components/Login/Login";
 import Register from "../components/Login/Register";
+import Sicretman from "../pages/Menu/MenuCategory/Sicretman";
+import PrivateRoute from "../components/Private/PrivateRoute";
+import SingleCheckour from "../components/FoodCard/SingleCheckour";
 
 
 export const router = createBrowserRouter([
@@ -35,7 +38,17 @@ export const router = createBrowserRouter([
         path: 'Register',
         element: <Register></Register>
       },
+      {
+        path: 'Secreat',
+        element: <PrivateRoute>
+          <Sicretman></Sicretman>
+        </PrivateRoute>
 
+      },
+      {
+        path: "checkout",
+        element:<SingleCheckour></SingleCheckour>
+      }
     ]
   },
 ]);

@@ -1,8 +1,19 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { contexM } from "../../../components/AuthProvider/ContexSuplier";
+import { FaShoppingCart } from "react-icons/fa";
+import useCart from "../../../components/FoodCard/UseCart";
+
+
+
 
 const NavBar = () => {
+
+    const [cart] = useCart();
+    // console.log(cart);
+
+
+
 
     const { user, LogoutUser } = useContext(contexM)
 
@@ -21,6 +32,12 @@ const NavBar = () => {
         <li><Link to="/">Home</Link></li>
         <li><Link to="/menu">Our Menu</Link></li>
         <li><Link to="/order/salad">Order Food</Link></li>
+        <li><Link to="/Secreat">Secreat</Link></li>
+        <Link className="mr-5" to='/checkout'>
+
+            <div className="badge badge-secondary"><FaShoppingCart></FaShoppingCart> + {cart?.length || 0}</div>
+        </Link>
+
 
         {
 

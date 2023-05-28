@@ -1,5 +1,5 @@
 
-import { GoogleAuthProvider, createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithPhoneNumber, signInWithPopup, signOut } from 'firebase/auth'
+import { GoogleAuthProvider, createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signInWithPhoneNumber, signInWithPopup, signOut, updateProfile } from 'firebase/auth'
 
 import app from '../AuthProvider/firebase.config';
 
@@ -31,14 +31,14 @@ const ContexSuplier = ({ children }) => {
 
     const LoginUser = (email, password) => {
         SetLoader(true)
-        return signInWithPhoneNumber(auth, email, password)
+        return signInWithEmailAndPassword(auth, email, password)
     }
 
     const createUser = (email, password) => {
         SetLoader(true)
 
         return createUserWithEmailAndPassword(auth, email, password)
-        
+
 
     }
 
@@ -54,7 +54,7 @@ const ContexSuplier = ({ children }) => {
     useEffect(() => {
         const off = onAuthStateChanged(auth, watch => {
             SetUser(watch)
-            console.log('user is ob obserbing', watch);
+            // console.log('user is ob obserbing', watch);
             SetLoader(false)
         })
         return () => {
@@ -63,13 +63,21 @@ const ContexSuplier = ({ children }) => {
     }, [])
 
 
+    const UpdateUserProfile = (name, photo) => {
+       return updateProfile(auth.currentUser, {
+            displayName: name, photoURL: photo
+        })
+
+    }
+
     const userInfos = {
         LoginUser,
         createUser,
         LogoutUser,
         Loader,
         user,
-        LoginUserWIthPopUp
+        LoginUserWIthPopUp,
+        UpdateUserProfile
 
 
     }

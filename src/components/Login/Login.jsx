@@ -2,12 +2,24 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { loadCaptchaEnginge, LoadCanvasTemplate, LoadCanvasTemplateNoReload, validateCaptcha } from 'react-simple-captcha';
 import { contexM } from '../AuthProvider/ContexSuplier';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 
 
 
 const Login = () => {
+
+
+
+    // thsis is for navigate
+
+    const navigate = useNavigate()
+
+    const location = useLocation()
+
+    const from = location.state?.from?.pathname || '/'
+    console.log(from);
+    // thsis is for navigate ends
 
     const { LoginUser } = useContext(contexM)
 
@@ -24,15 +36,16 @@ const Login = () => {
     const handleLogin = (e) => {
         e.preventDefault()
 
-        const from = e.target
-        const email = from.email.value
-        const password = from.password.value
+        const form = e.target
+        const email = form.email.value
+        const password = form.password.value
 
         console.log(email, password);
-        LoginUser(email,password)
+        LoginUser(email, password)
             .then(res => {
                 const user = res.user
-                console.log(user);
+                // console.log(user);
+                navigate(from, { replace: true })
             })
             .catch(err => {
                 console.log(err);
@@ -45,9 +58,12 @@ const Login = () => {
     const handleValidateCaptcha = () => {
 
         const user_captcha_value = captchaRef.current.value
+
         console.log(user_captcha_value);
 
-        if (validateCaptcha(user_captcha_value) == true) {
+        // console.log(validateCaptcha);
+
+        if (validateCaptcha(user_captcha_value, false) == true) {
 
             Setdisabled(false)
         }
@@ -95,6 +111,7 @@ const Login = () => {
                         <button onClick={handleValidateCaptcha} className='btn btn-xs'>
                             validate
                         </button>
+
                     </div>
                 </div>
                 <div className="mb-6">
@@ -114,7 +131,8 @@ const Login = () => {
                 </div>
                 <div className="flex items-center justify-between">
                     <button
-                        disabled={disabled}
+                    // to :: do to disable
+                        disabled={false}
                         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                         type="submit"
                     >

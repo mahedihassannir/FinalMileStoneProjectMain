@@ -31,7 +31,7 @@ const firebaseConfig = {
   projectId: "bistro-boss-2925f",
   storageBucket: "bistro-boss-2925f.appspot.com",
   messagingSenderId: "313329398460",
-  appId: "1:313329398460:web:f04d9ca745021bdac256b9"
+  appId: "1:313329398460:web:f04d9ca745021bdac256b9",
 };
 
 // Initialize Firebase

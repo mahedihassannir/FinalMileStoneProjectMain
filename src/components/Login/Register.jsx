@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { contexM } from "../AuthProvider/ContexSuplier";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { data } from "autoprefixer";
 
 
 const Register = () => {
@@ -8,7 +9,7 @@ const Register = () => {
 
     // here is teh contex create user 
 
-    const { createUser, LoginUserWIthPopUp } = useContext(contexM)
+    const { createUser, LoginUserWIthPopUp, UpdateUserProfile } = useContext(contexM)
 
     // here is teh contex create user  ends
 
@@ -17,24 +18,40 @@ const Register = () => {
         const form = e.target
 
         const name = form.name.value
+        const photo = form.url.value
         const email = form.email.value
         const password = form.password.value
-        console.log(name, email, password);
+        console.log(photo, name, email, password);
 
         createUser(email, password)
             .then(res => {
                 const user = res.user
                 console.log(user);
+
+                UpdateUserProfile(name, photo)
+
+                    .then(() => {
+
+                        console.log("user info updated");
+
+                    })
+
+                    .catch(err => {
+                        console.log(err);
+                    })
+
+
             })
 
 
     }
-
+    const navigate = useNavigate()
     const HandlePOPUPLOIN = () => {
         LoginUserWIthPopUp()
             .then(res => {
                 const user = res.user
                 console.log(user);
+                navigate('/')
             })
             .catch(err => {
                 console.log(err);
@@ -48,7 +65,7 @@ const Register = () => {
 
             <div className="hero-content w-1/2">
 
-                <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl ">
+                <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
                     <form onSubmit={handleRegister} className="card-body">
                         <div className="form-control">
                             <label className="label">
@@ -57,6 +74,12 @@ const Register = () => {
                             <input type="text" placeholder="Name" name="name" className="input input-bordered" />
                         </div>
 
+                        <div className="form-control">
+                            <label className="label">
+                                <span className="label-text">Photo Url</span>
+                            </label>
+                            <input type="url" name="url" placeholder="email" className="input input-bordered" />
+                        </div>
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text">Email</span>
