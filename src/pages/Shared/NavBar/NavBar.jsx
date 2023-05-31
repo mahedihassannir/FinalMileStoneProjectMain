@@ -33,7 +33,7 @@ const NavBar = () => {
         <li><Link to="/menu">Our Menu</Link></li>
         <li><Link to="/order/salad">Order Food</Link></li>
         <li><Link to="/Secreat">Secreat</Link></li>
-        <Link className="mr-5" to='/checkout'>
+        <Link className="mr-5" to='/dashboard'>
 
             <div className="badge badge-secondary"><FaShoppingCart></FaShoppingCart> + {cart?.length || 0}</div>
         </Link>

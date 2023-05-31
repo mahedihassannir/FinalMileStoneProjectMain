@@ -11,7 +11,7 @@ const FoodCard = ({ item }) => {
 
 
     const FaShoppingCart = (item) => {
-        // console.log(item);
+        console.log(item);
 
         if (user) {
 

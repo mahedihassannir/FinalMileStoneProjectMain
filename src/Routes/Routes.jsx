@@ -10,6 +10,9 @@ import Register from "../components/Login/Register";
 import Sicretman from "../pages/Menu/MenuCategory/Sicretman";
 import PrivateRoute from "../components/Private/PrivateRoute";
 import SingleCheckour from "../components/FoodCard/SingleCheckour";
+import DashBoard from "../components/DashBoard";
+import Admin from "../components/Sicretman/Admin";
+import Dola from "../components/Sicretman/dola";
 
 
 export const router = createBrowserRouter([
@@ -45,10 +48,27 @@ export const router = createBrowserRouter([
         </PrivateRoute>
 
       },
-      {
-        path: "checkout",
-        element:<SingleCheckour></SingleCheckour>
-      }
+
     ]
   },
+  {
+    path: "dashboard",
+    element: <DashBoard></DashBoard>,
+    children: [
+      {
+        path: "",
+        element: <SingleCheckour></SingleCheckour>
+      },
+      {
+        path: "admin",
+        element: <Admin></Admin>
+      },
+
+      {
+        path: "route",
+        element: <Dola></Dola>
+      },
+
+    ]
+  }
 ]);

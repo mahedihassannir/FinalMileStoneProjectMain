@@ -9,6 +9,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const Login = () => {
 
+    const { LoginUserWIthPopUp } = useContext(contexM)
 
 
     // thsis is for navigate
@@ -29,6 +30,35 @@ const Login = () => {
 
 
     }, [])
+
+
+    const HandlePOPUPLOIN = () => {
+        LoginUserWIthPopUp()
+            .then(res => {
+                const user = res.user
+                console.log(user);
+
+                const usersInfo = { email: user.email, img: user.photoURL, name: user.displayName }
+                console.log(usersInfo);
+                fetch(`http://localhost:5000/users`, {
+                    method: "POST",
+                    headers: {
+                        "content-type": "application/json"
+                    },
+                    body: JSON.stringify(usersInfo)
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data);
+                    })
+
+
+                navigate(from)
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
 
 
     const captchaRef = useRef()
@@ -131,7 +161,7 @@ const Login = () => {
                 </div>
                 <div className="flex items-center justify-between">
                     <button
-                    // to :: do to disable
+                        // to :: do to disable
                         disabled={false}
                         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                         type="submit"
@@ -151,6 +181,14 @@ const Login = () => {
                     <Link to='/'>
                         <p>back to home </p>
                     </Link>
+
+
+                    <div>
+                        <button onClick={HandlePOPUPLOIN} className="btn btn-primary">
+                            google
+
+                        </button>
+                    </div>
 
 
 

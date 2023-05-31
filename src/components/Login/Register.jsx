@@ -1,11 +1,17 @@
 import { useContext } from "react";
 import { contexM } from "../AuthProvider/ContexSuplier";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { data } from "autoprefixer";
+
 
 
 const Register = () => {
 
+    const navigate = useNavigate()
+
+    const location = useLocation()
+
+    const from = location.state?.from?.pathname || '/'
 
     // here is teh contex create user 
 
@@ -21,18 +27,37 @@ const Register = () => {
         const photo = form.url.value
         const email = form.email.value
         const password = form.password.value
-        console.log(photo, name, email, password);
+        // console.log(photo, name, email, password);
 
         createUser(email, password)
             .then(res => {
                 const user = res.user
                 console.log(user);
+                console.log(user.email);
+
+                const usersInfo = { email: user.email, img: user.photoURL, name: user.displayName }
+                console.log(usersInfo);
+                fetch(`http://localhost:5000/users`, {
+                    method: "POST",
+                    headers: {
+                        "content-type": "application/json"
+                    },
+                    body: JSON.stringify(usersInfo)
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data);
+                    })
 
                 UpdateUserProfile(name, photo)
 
                     .then(() => {
 
                         console.log("user info updated");
+
+
+                        navigate(from)
+
 
                     })
 
@@ -45,13 +70,28 @@ const Register = () => {
 
 
     }
-    const navigate = useNavigate()
+
     const HandlePOPUPLOIN = () => {
         LoginUserWIthPopUp()
             .then(res => {
                 const user = res.user
-                console.log(user);
-                navigate('/')
+                // console.log(user);
+                const usersInfo = { email: user.email, img: user.photoURL, name: user.displayName }
+                console.log(usersInfo);
+                fetch(`http://localhost:5000/users`, {
+                    method: "POST",
+                    headers: {
+                        "content-type": "application/json"
+                    },
+                    body: JSON.stringify(usersInfo)
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data);
+                    })
+
+                navigate(from)
+
             })
             .catch(err => {
                 console.log(err);
